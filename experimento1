@@ -2,7 +2,8 @@
 /**
  * main.c
  */
- //Librerias Incluidas 
+
+//Librerias Incluidas
 #include <stdint.h>
 #include <stdbool.h>
 #include "inc/hw_types.h"
@@ -10,14 +11,14 @@
 #include "driverlib/sysctl.h"
 #include "driverlib/gpio.h"
 
-int status;
+int var;
 /*
  * Funciones de delay
  */
 void delayS(uint32_t Segundos) {
 SysCtlDelay(Segundos * (SysCtlClockGet() / 3));
 }
-//Conversion de delay
+
 void delayMS(uint32_t Milisegundos) {
 SysCtlDelay(Milisegundos * (SysCtlClockGet() / 3/1000));
 }
@@ -30,13 +31,14 @@ int main(void)
     GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_4);
     GPIOPadConfigSet(GPIO_PORTF_BASE, GPIO_PIN_4, GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPU);
     while(1){
+
         /*
-        * PARTE 3
-        */
+         * PARTE 3
+         */
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, 0x02);
         delayS(2);
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, 0x0B);
-        delayS(2);
+         delayS(2);
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, 0x08);
         delayS(2);
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, 0x00);
@@ -47,12 +49,12 @@ int main(void)
         delayS(1);
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, 0x08);
         delayS(1);
-        
+
         /*
         * PARTE 4
         */
-        status = GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_4);
-        if (status==0){
+        var = GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_4);
+        if (var==0){
             GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, 0x08);
             delayS(1);
             GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, 0x00);
@@ -73,5 +75,4 @@ int main(void)
             GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, 0x00);
         }
     }
-        
 }
